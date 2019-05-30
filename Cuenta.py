@@ -3,7 +3,7 @@ class Cuenta:
 
     def __init__(self, nombre):
         self.nombre = nombre
-        self.monto = 0
+        self.monto = 10
     
     def retiro(self,ret):
         if(self.monto < ret):
@@ -14,3 +14,6 @@ class Cuenta:
 
     def consignacion(self,cons):
         self.monto = self.monto + cons
+
+    def __repr__(self):
+        return str(self.__dict__)

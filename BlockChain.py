@@ -12,12 +12,13 @@ class BlockChain:
         self.cuentas = []
 
     def agregarCuenta(self,cuenta):
-        
-        if(cuenta in self.cuentas):
-            print("La cuenta no pudo ser agregada, ya hay alguien con ese usuario")
-        else:
-            self.cuentas.append(cuenta)
-            print("La cuenta ha sido agregada exitosamente")
+        for c in self.cuentas:
+            if(cuenta.nombre == c.nombre):
+                #print("La cuenta no pudo ser agregada, ya hay alguien con ese usuario")
+                return 
+
+        self.cuentas.append(cuenta)
+        #print("La cuenta ha sido agregada exitosamente")
 
     def create_genesis(self ):
         return Block("fecha", "Genesis","0")
@@ -33,12 +34,21 @@ class BlockChain:
             if(res):
                 newTrans.append(tr)
 
-        block = Block(date.today(),newTrans,self.getLatestBlock().hash)
+        block = Block(str(date.today()),newTrans,self.getLatestBlock().hash)
         block.mineBlock(self.difficulty)
         print("Block mined")
         self.chain.append(block)
         self.pendingTransactions = [Transaction(None, rewardAddress,tipoTrans.CONSIGNAR, self.miningReward)]
     
+    def addBlock(self,block):
+        if(self.chain[len(self.chain)-1].hash == block.prevHash):
+            self.chain.append(block)
+            print("Exito")
+        else:
+            print("Incongruencia en el bloque")
+
+
+
     def createTransaction(self, c1, c2,tipoTrans, amount):
         trans = Transaction(c1,c2,tipoTrans,amount)
         self.pendingTransactions.append(trans)
@@ -55,6 +65,11 @@ class BlockChain:
         
         return balance
 
+    def find(self,name):
+        for c in self.cuentas:
+            if(c.nombre == name):
+                return c
+        return None
 
     def printClients(self):
         for i in self.cuentas:
@@ -73,4 +88,4 @@ class BlockChain:
             return Bloque1
         else:
             return Bloque2
-        
+

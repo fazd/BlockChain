@@ -3,6 +3,8 @@ from Block import Block
 from Validations import isChainValid
 from Cuenta import Cuenta
 from tipoTrans import tipoTrans
+import threading
+
 
 Chain = BlockChain(2)
 
@@ -26,3 +28,7 @@ Chain.createTransaction(c1,c4, tipoTrans.TRANSFERENCIA,30)
 Chain.minePendingTransactions(c1)
 Chain.minePendingTransactions(c2)
 
+print(Chain.getLatestBlock().toString()) 
+
+for c in Chain.cuentas:
+    print(c.nombre)

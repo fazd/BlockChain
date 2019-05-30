@@ -28,3 +28,12 @@ class Transaction:
         else:
             print("Transaccion invalida, no hay fondos suficientes")
             return False
+
+    def printTrans(self):
+        print("Cuenta de salida: "+ self.cuentaSal.nombre)
+        print("Cuenta de Entr: "+ self.cuentaEntr.nombre)
+        print("Monto: ", self.monto)
+        
+
+    def __repr__(self):
+        return str(self.__dict__)
